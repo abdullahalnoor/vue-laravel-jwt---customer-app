@@ -1,7 +1,9 @@
 import Home from './components/Home'
 import Login from './components/auth/login';
-import customerMain from './components/customer/customer'
-import customerList from './components/customer/list'
+import customerMain from './components/customer/Main'
+import customerList from './components/customer/List'
+import newCustomer from './components/customer/New'
+import viewCustomer from './components/customer/View'
 
 export const routes = [{
     path: '/',
@@ -21,8 +23,17 @@ export const routes = [{
       requiredAuth: true
     },
     children: [{
-      path: '/',
-      component: customerList
-    }]
+        path: '/',
+        component: customerList
+      },
+      {
+        path: 'new',
+        component: newCustomer
+      },
+      {
+        path: ':id',
+        component: viewCustomer
+      }
+    ]
   }
 ]

@@ -22,7 +22,15 @@ class CustomerController extends Controller
     }
 
     public function new(Request $request){
-        $customer = Customer::create($request->only(['name','email','phone','websit']));
+        // $customer = Customer::create($request->only(['name','email','phone','website']));
+
+        $customer = new Customer();
+        $customer->name = $request->name;
+        $customer->email = $request->email;
+        $customer->phone = $request->phone;
+        $customer->website = $request->website;
+        $customer->save();
+
         return response()->json([
            'customer' =>$customer 
         ],200);

@@ -4,6 +4,7 @@
       <div class="card">
         <div class="card-header">
           Customers
+          <router-link class="float-right" to="/customer/new">Add New</router-link>
         </div>
         <div class="card-body">
           <router-view></router-view>
