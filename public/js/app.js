@@ -51157,6 +51157,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -51170,6 +51175,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
 
+
   methods: {
     authenticate: function authenticate() {
       var _this = this;
@@ -51179,8 +51185,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this.$store.commit("loginSuccess", res);
         _this.$router.push("/");
       }).catch(function (error) {
-        _this.$store.commit("loginFailed", error);
+        _this.$store.commit("loginFailed", { error: error });
       });
+    }
+  },
+
+  computed: {
+    authError: function authError() {
+      return this.$store.getters.authError;
     }
   }
 });
@@ -51197,7 +51209,7 @@ var render = function() {
     _c("div", { staticClass: "col-md-4" }, [
       _c("div", { staticClass: "card" }, [
         _c("div", { staticClass: "card-header" }, [
-          _vm._v("\n        User Loging\n      ")
+          _vm._v("\n        User Loging \n      ")
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
@@ -51267,7 +51279,19 @@ var render = function() {
                 })
               ]),
               _vm._v(" "),
-              _vm._m(0)
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "row justify-content-center" }, [
+                _vm.authError
+                  ? _c("p", { staticClass: "text-danger" }, [
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.authError) +
+                          "\n            "
+                      )
+                    ])
+                  : _vm._e()
+              ])
             ]
           )
         ])
@@ -51282,7 +51306,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "form-group" }, [
       _c("input", {
-        staticClass: "btn btn-success",
+        staticClass: "btn btn-success btn-block",
         attrs: { type: "submit", value: "Login" }
       })
     ])
@@ -51501,9 +51525,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "app-header"
+  name: "app-header",
+  methods: {
+    logout: function logout() {
+      this.$store.commit("logout");
+      this.$router.push("/login");
+    }
+  },
+  computed: {
+    currentUser: function currentUser() {
+      return this.$store.getters.currentUser;
+    }
+  }
 });
 
 /***/ }),
@@ -51514,34 +51563,78 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row" }, [
+    _c(
+      "nav",
+      { staticClass: "nav justify-content-center|justify-content-end" },
+      [
+        !_vm.currentUser
+          ? [
+              _c(
+                "router-link",
+                { staticClass: "nav-link", attrs: { to: "/login" } },
+                [_vm._v("Login")]
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                { staticClass: "nav-link", attrs: { to: "/login" } },
+                [_vm._v("Register")]
+              )
+            ]
+          : [
+              _c(
+                "router-link",
+                { staticClass: "nav-link", attrs: { to: "/" } },
+                [_vm._v("Customer")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "dropdown open" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav-link  dropdown-toggle",
+                    attrs: {
+                      id: "triggerId",
+                      "data-toggle": "dropdown",
+                      "aria-haspopup": "true",
+                      "aria-expanded": "false"
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n              " +
+                        _vm._s(_vm.currentUser.name) +
+                        "\n          "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "dropdown-menu",
+                    attrs: { "aria-labelledby": "triggerId" }
+                  },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "dropdown-item",
+                        on: { click: _vm.logout }
+                      },
+                      [_vm._v(" Logout")]
+                    )
+                  ]
+                )
+              ])
+            ]
+      ],
+      2
+    )
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c(
-        "nav",
-        { staticClass: "nav justify-content-center|justify-content-end" },
-        [
-          _c("a", { staticClass: "nav-link active", attrs: { href: "#" } }, [
-            _vm._v("Active link")
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-            _vm._v("Link")
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "nav-link disabled", attrs: { href: "#" } }, [
-            _vm._v("Disabled link")
-          ])
-        ]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

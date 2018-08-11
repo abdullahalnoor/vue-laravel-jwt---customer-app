@@ -3,7 +3,7 @@
     <div class="col-md-4">
       <div class="card">
         <div class="card-header">
-          User Loging
+          User Loging 
         </div>
         <div class="card-body">
           <form action="" @submit.prevent="authenticate">
@@ -16,7 +16,12 @@
               <input type="password" class="form-control" v-model="form.password">
             </div>
             <div class="form-group">
-              <input type="submit" value="Login" class="btn btn-success">
+              <input type="submit" value="Login" class="btn btn-success btn-block">
+            </div>
+            <div class="row justify-content-center">
+              <p class="text-danger" v-if="authError">
+                {{authError}}
+              </p>
             </div>
           </form>
         </div>
@@ -36,6 +41,7 @@ export default {
       }
     };
   },
+
   methods: {
     authenticate() {
       this.$store.dispatch("login");
@@ -45,8 +51,14 @@ export default {
           this.$router.push("/");
         })
         .catch(error => {
-          this.$store.commit("loginFailed", error);
+          this.$store.commit("loginFailed", { error });
         });
+    }
+  },
+
+  computed: {
+    authError() {
+      return this.$store.getters.authError;
     }
   }
 };
