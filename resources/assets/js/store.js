@@ -34,6 +34,16 @@ export default {
   actions: {
     login(context) {
       context.commit('login')
+    },
+    getCustomers(context) {
+      axios.get("api/customers", {
+          headers: {
+            "authorization": `Bearer ${context.state.currentUser.token}`
+          }
+        })
+        .then(response => {
+          context.commit('setCustomers', response.data.customers)
+        })
     }
   },
   mutations: {
@@ -58,6 +68,9 @@ export default {
       localStorage.removeItem('user');
       state.currentUser = null;
       state.isLoggedIn = false
+    },
+    setCustomers(state, payload) {
+      state.customers = payload
     }
   }
 }

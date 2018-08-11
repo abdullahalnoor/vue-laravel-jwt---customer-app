@@ -17,6 +17,10 @@ import {
 import storeData from './store';
 
 import MainApp from './components/MainApp';
+import axios from 'axios';
+import {
+    initialize
+} from './helpers/general'
 
 Vue.use(VueRouter)
 Vue.use(Vuex)
@@ -37,20 +41,7 @@ const router = new VueRouter({
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue'));
-
-router.beforeEach((to, from, next) => {
-    const requiredAuth = to.matched.some(record => record.meta.requiredAuth)
-    const currentUser = store.state.currentUser
-    if (requiredAuth && !currentUser) {
-        next('/login')
-    } else if (to.path == '/login' && currentUser) {
-        next('/')
-    } else {
-        next()
-    }
-})
-
+initialize(store, router)
 
 const app = new Vue({
     el: '#app',

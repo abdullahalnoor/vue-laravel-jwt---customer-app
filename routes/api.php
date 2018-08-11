@@ -29,3 +29,8 @@ Route::group([
     Route::post('me', 'AuthController@me');
 
 });
+Route::group(['middleware'=> 'jwt.auth'],function(){
+    Route::get('/customers','CustomerController@all');
+    Route::get('/customer/{id}','CustomerController@get');
+    Route::post('/customer','CustomerController@new');
+});
